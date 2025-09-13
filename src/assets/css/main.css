@@ -22,7 +22,7 @@
   --radius-lg: 12px;
 }
 
-header{
+header {
   text-align: center;
   color: var(--primary-color);
 }
@@ -90,7 +90,7 @@ input:focus, textarea:focus {
   margin-bottom: 10px;
 }
 
-.user-info, .progress-item #levelDisplay{
+.user-info, .progress-item #levelDisplay {
   color: #1E2019;
   font-size: 15px;
   font-weight: bold;
@@ -100,7 +100,7 @@ input:focus, textarea:focus {
   background-color: #4caf50;
 }
 
-.user-info, .progress-item #levelName{
+.user-info, .progress-item #levelName {
   color: #4caf50;
   font-weight: bold;
   padding: 5px;
@@ -153,6 +153,34 @@ input:focus, textarea:focus {
   margin: 5px 0 0;
   font-size: 0.9em;
   color: #666;
+}
+
+.category-list {
+  margin-top: 20px;
+}
+
+.category-list h3 {
+  font-size: 1.1em;
+  color: var(--text-primary);
+  margin-bottom: 10px;
+}
+
+#categoryListUl {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#categoryListUl li {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 0.9em;
+}
+
+#categoryListUl li:last-child {
+  border-bottom: none;
 }
 
 /* Kolom Tengah */
@@ -385,6 +413,52 @@ form input, select {
 
 .bx-check-circle {
   font-size: 20px;
+}
+
+/* Loading Overlay Styles */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.9);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  transition: opacity 0.3s ease-out;
+}
+
+.loading-overlay.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.loader {
+  width: 48px;
+  height: 48px;
+  border: 5px solid var(--primary-light);
+  border-bottom-color: var(--primary-color);
+  border-radius: 50%;
+  animation: rotation 1s linear infinite;
+  margin-bottom: 16px;
+}
+
+.loading-overlay p {
+  color: var(--primary-color);
+  font-size: 1.1em;
+  font-weight: 500;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* Media Queries */

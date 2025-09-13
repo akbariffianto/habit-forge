@@ -1,19 +1,17 @@
-// src/components/PomodoroTimer.js
+// src/components/PomodoroTimer.js (Diperbaiki)
 
-/**
- * Class representing a Pomodoro Timer
- */
 class PomodoroTimer {
-  // Timer constants
-  static WORK_TIME = 25 * 60; // 25 minutes in seconds
-  static BREAK_TIME = 5 * 60; // 5 minutes in seconds
-  static UPDATE_INTERVAL = 1000; // 1 second
+  // Time constants in seconds
+  static WORK_TIME = 25 * 60;
+  static BREAK_TIME = 5 * 60;
+  static UPDATE_INTERVAL = 1000;
 
   /**
    * Create a pomodoro timer
    * @param {HTMLElement} displayElement - Element to display the timer
+   * @param {Function} onCompleteCallback - Fungsi yang dipanggil saat timer selesai
    */
-  constructor(displayElement) {
+  constructor(displayElement, onCompleteCallback) { // <-- Tambahkan parameter kedua
     if (!displayElement) {
       throw new Error('Display element is required');
     }
@@ -23,8 +21,11 @@ class PomodoroTimer {
     this.timeLeft = PomodoroTimer.WORK_TIME;
     this.isBreak = false;
     this.intervalId = null;
+    this.onComplete = onCompleteCallback; // <-- Simpan callback
 
-    // Initial display
+    // Ganti path ini jika perlu
+    this.notificationSound = new Audio('/assets/audio/complete.mp3'); 
+
     this.displayTime(this.timeLeft);
   }
 
@@ -35,7 +36,7 @@ class PomodoroTimer {
   displayTime(seconds) {
     const minutes = Math.floor(seconds / 60);
     const secs = seconds % 60;
-    this.displayElement.textContent = 
+    this.displayElement.textContent =
       `${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   }
 
@@ -44,34 +45,46 @@ class PomodoroTimer {
    */
   start() {
     if (this.isRunning) return;
-    
+
     this.isRunning = true;
     this.intervalId = setInterval(() => {
       if (this.timeLeft > 0) {
         this.timeLeft--;
         this.displayTime(this.timeLeft);
       } else {
+        // ... (logika notifikasi suara tetap sama)
+        const playPromise = this.notificationSound.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(error => {
+            console.error("Gagal memutar audio:", error);
+            alert("Sesi Selesai!"); 
+          });
+        }
+        
         this.reset();
         this.toggleMode();
+
+        // --- PERUBAHAN INTI: Panggil callback di sini ---
+        if (this.onComplete) {
+          this.onComplete();
+        }
       }
     }, PomodoroTimer.UPDATE_INTERVAL);
   }
 
   /**
-   * Pauses the timer
+   * Pause the timer
    */
   pause() {
     if (!this.isRunning) return;
 
     this.isRunning = false;
-    if (this.intervalId) {
-      clearInterval(this.intervalId);
-      this.intervalId = null;
-    }
+    clearInterval(this.intervalId);
+    this.intervalId = null;
   }
 
   /**
-   * Resets the timer
+   * Reset the timer to the initial state
    */
   reset() {
     this.pause();
@@ -80,19 +93,19 @@ class PomodoroTimer {
   }
 
   /**
-   * Toggles between work and break modes
+   * Toggle between work and break mode
    */
   toggleMode() {
     this.isBreak = !this.isBreak;
     this.timeLeft = this.isBreak ? PomodoroTimer.BREAK_TIME : PomodoroTimer.WORK_TIME;
     this.displayTime(this.timeLeft);
-    
+
     const mode = this.isBreak ? 'Break' : 'Work';
     console.log(`Switching to ${mode} Mode`);
   }
-
+  
   /**
-   * Returns bound methods for external use
+   * Import methods to main application
    */
   importToMain() {
     return {

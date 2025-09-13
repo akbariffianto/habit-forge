@@ -21,6 +21,11 @@
     <title>HabitForge</title>
   </head>
   <body>
+    <div id="loadingOverlay" class="loading-overlay">
+      <div class="loader"></div>
+      <p>Loading your habits...</p>
+    </div>
+
     <header>
       <h1>HabitForge: Atomic Habit Tracker</h1>
       <p>"Small habits, big results." - James Clear</p>
@@ -31,7 +36,7 @@
         <h2>User Progress</h2>
         <div class="progress-item">
           <span>Level</span>
-          <span id="levelDisplay">5</span>
+          <span id="levelDisplay">1</span>
         </div>
         <div class="progress-item">
           <span>Tingkatan</span>
@@ -40,11 +45,15 @@
         <div class="progress-item exp-bar-container">
           <span>EXP</span>
           <div class="exp-bar-bg">
-            <div id="expBar" class="exp-bar-fill" style="width: 68%"></div>
+            <div id="expBar" class="exp-bar-fill" style="width: 0%"></div>
           </div>
-          <span id="expDisplay">340 / 500</span>
+          <span id="expDisplay">0 / 100</span>
         </div>
         <ul id="achievementsList"></ul>
+        <div id="categoryList" class="category-list">
+          <h3>Habit Categories</h3>
+          <ul id="categoryListUl"></ul>
+        </div>
       </section>
 
       <div class="center-column">

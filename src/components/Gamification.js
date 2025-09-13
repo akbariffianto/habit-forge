@@ -29,8 +29,7 @@ class Gamification {
     try {
       const progress = localStorage.getItem(this.STORAGE_KEY);
       return progress ? JSON.parse(progress) : this.initializeProgress();
-    } catch (error) {
-      console.error('Error loading user progress:', error);
+    } catch {
       return this.initializeProgress();
     }
   }

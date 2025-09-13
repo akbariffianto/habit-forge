@@ -22,8 +22,7 @@ class HabitList {
    */
   createButton({ className, innerHTML, onClick }) {
     const button = document.createElement('button');
-    button.className = className;
-    button.innerHTML = innerHTML;
+    Object.assign(button, { className, innerHTML });
     button.addEventListener('click', onClick);
     return button;
   }
@@ -34,8 +33,7 @@ class HabitList {
    */
   createDiv({ className, textContent = '' }) {
     const div = document.createElement('div');
-    div.className = className;
-    if (textContent) div.textContent = textContent;
+    Object.assign(div, { className, textContent });
     return div;
   }
 
@@ -80,16 +78,11 @@ class HabitList {
    * @param {Array} habits - Array of habit objects
    */
   renderHabits(habits) {
+    const fragment = document.createDocumentFragment();
+    habits.forEach(habit => fragment.appendChild(this.createHabitElement(habit)));
+    
     // Clear container
     this.container.innerHTML = '';
-
-    // Create document fragment for better performance
-    const fragment = document.createDocumentFragment();
-    
-    // Add habits to fragment
-    habits.forEach(habit => {
-      fragment.appendChild(this.createHabitElement(habit));
-    });
 
     // Append fragment to container
     this.container.appendChild(fragment);

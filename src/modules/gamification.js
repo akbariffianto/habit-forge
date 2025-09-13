@@ -2,8 +2,7 @@
 
 import dataManager from './dataManager.js';
 
-// Game constants
-const CONSTANTS = {
+export const CONSTANTS = {
   EXP_PER_HABIT: 10,
   LEVEL_UP_EXP_THRESHOLD: 100,
   LEVEL_NAMES: ['Rookie', 'Beginner', 'Adept', 'Pro', 'Master', 'Legend'],
@@ -14,26 +13,28 @@ const CONSTANTS = {
   }
 };
 
-// User progress state
-let userProgress = {
-  totalExp: 0,
-  level: 1,
-  achievements: []
-};
+let userProgress = {};
 
 /**
  * Initializes user progress from storage or creates new
  */
-function initUserProgress() {
+export function initUserProgress() {
   try {
     const storedProgress = dataManager.loadProgress();
-    userProgress = storedProgress || {
-      totalExp: 0,
-      level: 1,
-      achievements: []
-    };
     if (!storedProgress) {
+      userProgress = {
+        totalExp: 0,
+        level: 1,
+        exp: 0,
+        achievements: [],
+        categories: {}
+      };
       dataManager.saveProgress(userProgress);
+    } else {
+      userProgress = storedProgress;
+      if (!userProgress.categories) {
+        userProgress.categories = {};
+      }
     }
   } catch (error) {
     console.error('Failed to initialize progress:', error);
@@ -41,18 +42,10 @@ function initUserProgress() {
 }
 
 /**
- * Calculates experience points for completed habits
- * @returns {number} Experience points
- */
-function calculateExp() {
-  return CONSTANTS.EXP_PER_HABIT;
-}
-
-/**
  * Updates user progress with new experience points
  * @param {number} expToAdd - Experience points to add
  */
-function updateProgress(expToAdd) {
+export function updateProgress(expToAdd, category) {
   if (typeof expToAdd !== 'number' || expToAdd < 0) {
     throw new Error('Invalid experience points');
   }
@@ -62,6 +55,13 @@ function updateProgress(expToAdd) {
     userProgress.level = Math.floor(userProgress.totalExp / CONSTANTS.LEVEL_UP_EXP_THRESHOLD) + 1;
     userProgress.exp = userProgress.totalExp % CONSTANTS.LEVEL_UP_EXP_THRESHOLD;
     
+    if (category) {
+      if (!userProgress.categories[category]) {
+        userProgress.categories[category] = { completed: 0 };
+      }
+      userProgress.categories[category].completed++;
+    }
+
     const newAchievements = checkAchievements(userProgress.totalExp);
     userProgress.achievements = [...new Set([...userProgress.achievements, ...newAchievements])];
     
@@ -73,20 +73,37 @@ function updateProgress(expToAdd) {
 }
 
 /**
+ * Registers a new category for the user
+ * @param {string} category - Category name
+ */
+export function registerCategory(category) {
+  if (!userProgress.categories[category]) {
+    userProgress.categories[category] = { completed: 0 };
+    dataManager.saveProgress(userProgress);
+  }
+}
+
+/**
+ * Calculates experience points for completed habits
+ * @returns {number} Experience points
+ */
+export function calculateExp() {
+  return CONSTANTS.EXP_PER_HABIT;
+}
+
+/**
  * Checks for newly unlocked achievements
  * @param {number} totalExp - Total experience points
  * @returns {string[]} Array of new achievements
  */
-function checkAchievements(totalExp) {
+export function checkAchievements(totalExp) {
   const newAchievements = [];
-  
   Object.values(CONSTANTS.ACHIEVEMENTS).forEach(achievement => {
     if (totalExp >= achievement.expRequired && 
         !userProgress.achievements.includes(achievement.name)) {
       newAchievements.push(achievement.name);
     }
   });
-  
   return newAchievements;
 }
 
@@ -94,7 +111,7 @@ function checkAchievements(totalExp) {
  * Gets current user progress
  * @returns {Object} User progress object
  */
-function getUserProgress() {
+export function getUserProgress() {
   return { ...userProgress };
 }
 
@@ -103,20 +120,9 @@ function getUserProgress() {
  * @param {number} level - Current level
  * @returns {string} Level name
  */
-function getLevelName(level) {
+export function getLevelName(level) {
   if (typeof level !== 'number' || level <= 0) {
     return CONSTANTS.LEVEL_NAMES[0];
   }
-  const index = Math.min(level - 1, CONSTANTS.LEVEL_NAMES.length - 1);
-  return CONSTANTS.LEVEL_NAMES[index];
+  return CONSTANTS.LEVEL_NAMES[Math.min(level - 1, CONSTANTS.LEVEL_NAMES.length - 1)];
 }
-
-export {
-  calculateExp,
-  updateProgress,
-  checkAchievements,
-  getUserProgress,
-  initUserProgress,
-  getLevelName,
-  CONSTANTS
-};

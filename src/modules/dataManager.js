@@ -2,13 +2,10 @@
  * Constants for local storage keys
  */
 const STORAGE_KEYS = {
-  HABITS: 'habitForgeData',
-  PROGRESS: 'habitForgeProgress'
+  HABITS: "habitForgeData",
+  PROGRESS: "habitForgeProgress",
 };
 
-/**
- * Class representing data management operations
- */
 class DataManager {
   constructor() {
     this.data = this.loadHabits();
@@ -21,15 +18,15 @@ class DataManager {
    */
   saveHabits(habits) {
     if (!Array.isArray(habits)) {
-      throw new Error('Habits must be an array');
+      throw new Error("Habits must be an array");
     }
 
     try {
       localStorage.setItem(STORAGE_KEYS.HABITS, JSON.stringify(habits));
       this.data = habits;
     } catch (error) {
-      console.error('Failed to save habits:', error);
-      throw new Error('Failed to save habits to storage');
+      console.error("Failed to save habits:", error);
+      throw new Error("Failed to save habits to storage");
     }
   }
 
@@ -42,7 +39,7 @@ class DataManager {
       const storedData = localStorage.getItem(STORAGE_KEYS.HABITS);
       return storedData ? JSON.parse(storedData) : [];
     } catch (error) {
-      console.error('Failed to load habits:', error);
+      console.error("Failed to load habits:", error);
       return [];
     }
   }
@@ -54,15 +51,15 @@ class DataManager {
    */
   addHabit(habit) {
     if (!this.isValidHabit(habit)) {
-      throw new Error('Invalid habit object');
+      throw new Error("Invalid habit object");
     }
 
     try {
       this.data.push(habit);
       this.saveHabits(this.data);
     } catch (error) {
-      console.error('Failed to add habit:', error);
-      throw new Error('Failed to add habit');
+      console.error("Failed to add habit:", error);
+      throw new Error("Failed to add habit");
     }
   }
 
@@ -73,19 +70,18 @@ class DataManager {
    */
   updateHabit(habit) {
     if (!this.isValidHabit(habit)) {
-      throw new Error('Invalid habit object');
+      throw new Error("Invalid habit object");
     }
 
     try {
-      const index = this.data.findIndex(h => h.id === habit.id);
-      if (index !== -1) {
-        this.data[index] = habit;
-        this.saveHabits(this.data);
-        return true;
-      }
-      return false;
+      const index = this.data.findIndex((h) => h.id === habit.id);
+      if (index === -1) return false;
+
+      this.data[index] = habit;
+      this.saveHabits(this.data);
+      return true;
     } catch (error) {
-      console.error('Failed to update habit:', error);
+      console.error("Failed to update habit:", error);
       return false;
     }
   }
@@ -97,20 +93,19 @@ class DataManager {
    */
   deleteHabit(habitId) {
     if (!habitId) {
-      throw new Error('Habit ID is required');
+      throw new Error("Habit ID is required");
     }
 
     try {
       const initialLength = this.data.length;
-      this.data = this.data.filter(habit => habit.id !== habitId);
-      
-      if (this.data.length !== initialLength) {
-        this.saveHabits(this.data);
-        return true;
-      }
-      return false;
+      this.data = this.data.filter((habit) => habit.id !== habitId);
+
+      if (this.data.length === initialLength) return false;
+
+      this.saveHabits(this.data);
+      return true;
     } catch (error) {
-      console.error('Failed to delete habit:', error);
+      console.error("Failed to delete habit:", error);
       return false;
     }
   }
@@ -121,14 +116,14 @@ class DataManager {
    */
   saveProgress(progress) {
     if (!this.isValidProgress(progress)) {
-      throw new Error('Invalid progress object');
+      throw new Error("Invalid progress object");
     }
 
     try {
       localStorage.setItem(STORAGE_KEYS.PROGRESS, JSON.stringify(progress));
     } catch (error) {
-      console.error('Failed to save progress:', error);
-      throw new Error('Failed to save progress');
+      console.error("Failed to save progress:", error);
+      throw new Error("Failed to save progress");
     }
   }
 
@@ -141,7 +136,7 @@ class DataManager {
       const storedProgress = localStorage.getItem(STORAGE_KEYS.PROGRESS);
       return storedProgress ? JSON.parse(storedProgress) : null;
     } catch (error) {
-      console.error('Failed to load progress:', error);
+      console.error("Failed to load progress:", error);
       return null;
     }
   }
@@ -155,9 +150,10 @@ class DataManager {
   isValidHabit(habit) {
     return (
       habit &&
-      typeof habit.id === 'string' &&
-      typeof habit.name === 'string' &&
-      typeof habit.description === 'string'
+      typeof habit.id === "string" &&
+      typeof habit.name === "string" &&
+      typeof habit.description === "string" &&
+      typeof habit.category === "string"
     );
   }
 
@@ -170,8 +166,8 @@ class DataManager {
   isValidProgress(progress) {
     return (
       progress &&
-      typeof progress.level === 'number' &&
-      typeof progress.exp === 'number'
+      typeof progress.level === "number" &&
+      typeof progress.exp === "number"
     );
   }
 }

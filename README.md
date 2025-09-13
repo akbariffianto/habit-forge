@@ -1,42 +1,61 @@
-# HabitForge: Atomic Habits Tracker
+# Habit Forge
 
-## What is HabitForge?
+## Deskripsi
 
-HabitForge is a web application designed to assist users in developing positive habits using principles inspired by James Clear's "Atomic Habits". It features habit tracking with a local storage backend, game-like progression using experience points (EXP) and levels, and a simple Pomodoro timer integration for focused work sessions.
+**Habit Forge** adalah aplikasi pelacak kebiasaan yang dirancang untuk membantu pengguna membangun dan mempertahankan kebiasaan positif, terinspirasi oleh buku "Atomic Habits". Aplikasi ini menggabungkan pelacakan kebiasaan dengan elemen gamifikasi untuk membuat prosesnya lebih menarik dan memotivasi.
 
-## Key Features
+---
 
-- **Habit Management**: Add, view, edit, and delete habits with customizable frequency (daily, weekly).
-- **Gamification System**: Earn XP for habit completion, level up by accumulating XP, and unlock achievements.
-- **Pomodoro Timer**: Timed work sessions with adjustable durations to enhance focus and productivity.
-- **Local Data Storage**: Utilizes browser's `localStorage` for a seamless, offline-first experience without relying on server-side databases.
+## Teknologi yang Digunakan
 
-## Technologies Used
+* **Node.js**: Lingkungan runtime JavaScript.
+* **Express**: Kerangka kerja web untuk Node.js.
+* **dotenv**: Modul untuk memuat variabel lingkungan dari file `.env`.
+* **Replicate**: Pustaka klien untuk berinteraksi dengan Replicate API.
 
-- **HTML5, CSS3**: Standard web technologies for structure and styling.
-- **JavaScript (Vanilla JS)**: Primary language for application logic and dynamic interactions.
-- **`localStorage`**: For local storage of user progress and data.
-- **Webpack**: Bundling tool for managing and optimizing JavaScript modules.
-- **Visual Studio Code**: IDE for development and debugging.
-- **Vercel/Netlify**: For deployment and hosting.
+---
 
-**Rationale for Technology Choices**:
+## Fitur
 
-*   **HTML5 & CSS3**: Ensuring compatibility across modern browsers with clean, semantic markup.
-*   **JavaScript (Vanilla JS)**: For direct control over the DOM and performance, aligned with modular coding practices.
-*   `localStorage`: Prioritizing an offline-first approach with no back-end requirements for simpler deployment and user accessibility.
-*   **Webpack**: Aiding in modularizing code, optimizing build processes, and managing external libraries if introduced in future expansions.
-*   **Visual Studio Code**: For efficient coding and debugging thanks to robust features and extensions.
-*   **Vercel/Netlify**: Enabling hassle-free deployment with automatic HTTPS, custom domains, and serverless functions support.
+* **Pelacakan Kebiasaan**: Pengguna dapat menambahkan, mengedit, dan menghapus kebiasaan yang ingin mereka lacak.
+* **Gamifikasi**: Aplikasi ini menyertakan elemen gamifikasi seperti lencana pencapaian untuk memberi penghargaan kepada pengguna atas konsistensi mereka.
+* **Timer Pomodoro**: Fitur timer Pomodoro terintegrasi untuk membantu pengguna fokus pada tugas-tugas mereka.
+* **Manajemen Data**: Menyimpan dan mengelola data kebiasaan pengguna.
 
-## Setting Up Locally
+---
 
-1.  Clone this repository using Git: `git clone https://github.com/akbariffianto/habit-forge`.
-2.  Open the project in Visual Studio Code.
-3.  Ensure you have Node.js and npm installed on your system.
-4.  Navigate to the project directory in the terminal and run `npm install` to fetch all dependencies.
-5.  Start the local development server by executing `npm run start`. Open [http://localhost:8080](http://localhost:8080) in your web browser.
+## Instruksi Pengaturan
 
-## AI Assistance in Development
+1.  **Kloning repositori**:
+    ```bash
+    git clone [https://github.com/nama-pengguna-anda/habit-forge.git](https://github.com/nama-pengguna-anda/habit-forge.git)
+    cd habit-forge
+    ```
 
-Throughout the development of HabitForge, AI tools like IBM Granite played a crucial role in expediting and refining the coding process. Granite provided precise language models to generate structured code snippets, helped optimize JavaScript for performance, and ensured adherence to best practices. It aided in tasks such as structural design, error identification, and even suggested improvements in code modularity and efficiency. Notably, while AI significantly contributed to the development stage, HabitForge operates independently without any AI components embedded within the final product, ensuring a pure user experience focused on habit tracking and gamification.
+2.  **Instal dependensi**:
+    ```bash
+    npm install
+    ```
+
+3.  **Buat file `.env`**:
+    Buat file `.env` di direktori root dan tambahkan variabel lingkungan yang diperlukan.
+
+4.  **Jalankan aplikasi**:
+    * Untuk mode pengembangan (menggunakan Vercel CLI):
+        ```bash
+        vercel dev
+        ```
+    * Untuk mode produksi:
+        ```bash
+        npm start
+        ```
+
+---
+
+## Penjelasan Dukungan AI
+
+Proyek ini memanfaatkan kecerdasan buatan (AI) melalui **IBM Granite** untuk beberapa tujuan utama:
+
+* **Pembuatan Kode**: IBM Granite digunakan untuk menghasilkan cuplikan kode dan fungsi, mempercepat proses pengembangan.
+* **Optimalisasi Kode**: AI membantu dalam mengoptimalkan kode yang ada untuk kinerja dan keterbacaan yang lebih baik.
+* **Curah Gagasan (Brainstorming)**: Selama fase perencanaan, IBM Granite digunakan untuk bertukar pikiran tentang ide-ide seperti tumpukan teknologi yang akan digunakan, bahasa pemrograman, fitur-fitur yang akan diimplementasikan, dan ringkasan proyek secara keseluruhan.
