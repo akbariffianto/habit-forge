@@ -1,14 +1,22 @@
 {
   "version": 2,
-  "routes": [
+  "builds": [
     {
-      "src": "/src/(.*)\\.js$",
-      "headers": {
-        "Content-Type": "application/javascript"
-      }
+      "src": "server.js",
+      "use": "@vercel/node"
     }
   ],
-  "buildCommand": "npm run build",
-  "outputDirectory": "dist",
-  "public": true
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "server.js"
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ]
 }
