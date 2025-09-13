@@ -1,11 +1,11 @@
 // src/main.js
-import HabitList from "./components/HabitList.js";
-import createBadge from "./components/AchievementBadge.js";
-import PomodoroTimer from "./components/PomodoroTimer.js";
-import dataManager from "./modules/dataManager.js";
-import * as gamification from "./modules/gamification.js";
-import { generateUniqueId } from "./modules/utils.js";
-import { categorizeHabit } from "./modules/replicate.js";
+import HabitList from '/src/components/HabitList.js';
+import createBadge from '/src/components/AchievementBadge.js';
+import PomodoroTimer from '/src/components/PomodoroTimer.js';
+import dataManager from '/src/modules/dataManager.js';
+import * as gamification from '/src/modules/gamification.js';
+import { generateUniqueId } from '/src/modules/utils.js';
+import { categorizeHabit } from '/src/modules/replicate.js';
 
 class App {
   constructor() {

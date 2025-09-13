@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "vercel dev"
+    "dev": "node server.js",
+    "build": "mkdir dist && xcopy /E /I src dist\\src && copy index.html dist"
   },
   "dependencies": {
     "dotenv": "^16.4.5",
