@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="src/assets/css/main.css" />
+    <!-- Boxicons CSS -->
+    <link
+      href="https://cdn.boxicons.com/fonts/basic/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.boxicons.com/fonts/brands/boxicons-brands.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>HabitForge</title>
+  </head>
+  <body>
+    <header>
+      <h1>HabitForge: Atomic Habit Tracker</h1>
+      <p>"Small habits, big results." - James Clear</p>
+    </header>
+
+    <div class="main-container">
+      <section id="userProgress" class="card user-progress">
+        <h2>User Progress</h2>
+        <div class="progress-item">
+          <span>Level</span>
+          <span id="levelDisplay">5</span>
+        </div>
+        <div class="progress-item">
+          <span>Tingkatan</span>
+          <span id="levelName">Rookie</span>
+        </div>
+        <div class="progress-item exp-bar-container">
+          <span>EXP</span>
+          <div class="exp-bar-bg">
+            <div id="expBar" class="exp-bar-fill" style="width: 68%"></div>
+          </div>
+          <span id="expDisplay">340 / 500</span>
+        </div>
+        <ul id="achievementsList"></ul>
+      </section>
+
+      <div class="center-column">
+        <section id="habitManagement" class="card">
+          <h2>Habit Management</h2>
+          <form id="addHabitForm">
+            <input
+              type="text"
+              id="habitName"
+              placeholder="e.g., Read 10 pages"
+              required
+            />
+            <textarea id="habitDescription" required></textarea>
+            <button type="submit">Add Habit</button>
+          </form>
+        </section>
+
+        <section id="habitListContainer" class="card your-habits-card">
+          <h2>Your Habits</h2>
+          <div class="habit-item">
+            <div class="habit-info">
+              <div class="habit-name">Read 10 pages</div>
+              <div class="habit-description">
+                Read at least 10 pages of a book every day
+              </div>
+            </div>
+            <div class="habit-actions">
+              <button class="complete-button">
+                <i class="bx bx-check-circle"></i>
+                Mark Complete
+              </button>
+              <button class="delete-button">
+                <i class="bx bx-trash"></i>
+              </button>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <section id="pomodoroTimer" class="card">
+        <h2>Pomodoro Timer</h2>
+        <div id="timerDisplay" class="timer-display">25:00</div>
+        <div class="timer-controls">
+          <button id="startTimer" style="display: inline-block">
+            <i class="bx bx-play-circle"></i> Start
+          </button>
+          <button id="pauseTimer" style="display: none">
+            <i class="bx bx-pause-circle"></i> Paused
+          </button>
+          <button id="resetTimer">
+            <i class="bx bx-rotate-ccw"></i> Reset
+          </button>
+        </div>
+      </section>
+    </div>
+
+    <script type="module" src="src/main.js"></script>
+  </body>
+</html>
