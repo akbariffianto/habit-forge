@@ -2,12 +2,31 @@ require('dotenv').config();
 const express = require('express');
 const Replicate = require('replicate');
 const cors = require('cors');
+const path = require('path');
 
 const app = express();
 
 // Middleware
 app.use(cors());
 app.use(express.json());
+
+// Add CSP headers
+app.use((req, res, next) => {
+  res.setHeader(
+    'Content-Security-Policy',
+    "default-src 'self'; " +
+    "connect-src 'self' localhost:* http://localhost:*; " +
+    "script-src 'self' 'unsafe-inline' 'unsafe-eval'; " +
+    "style-src 'self' 'unsafe-inline' https://cdn.boxicons.com https://fonts.googleapis.com; " +
+    "font-src 'self' https://cdn.boxicons.com https://fonts.gstatic.com; " +
+    "img-src 'self' data: https:; " +
+    "frame-src 'self'"
+  );
+  next();
+});
+
+// Serve static files
+app.use(express.static(path.join(__dirname)));
 
 // --- HANYA RUTE API ---
 app.post('/api/categorize', async (req, res) => {
@@ -48,6 +67,11 @@ app.post('/api/categorize', async (req, res) => {
       details: error.message 
     });
   }
+});
+
+// Handle all other routes for SPA
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 // Tidak perlu app.listen(), Vercel menanganinya
