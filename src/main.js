@@ -1,4 +1,4 @@
-// src/main.js (Diperbaiki & Disesuaikan dengan gamification.js baru)
+// src/main.js
 import HabitList from "./components/HabitList.js";
 import createBadge from "./components/AchievementBadge.js";
 import PomodoroTimer from "./components/PomodoroTimer.js";
