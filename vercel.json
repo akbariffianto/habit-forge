@@ -4,28 +4,19 @@
     {
       "src": "server.js",
       "use": "@vercel/node"
-    },
-    {
-      "src": "src/**",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "index.html",
-      "use": "@vercel/static"
     }
   ],
   "routes": [
     {
-      "src": "/src/(.*\\.js)",
-      "headers": { "Content-Type": "application/javascript" },
+      "src": "/api/(.*)",
+      "dest": "server.js"
+    },
+    {
+      "src": "/src/(.*)",
       "dest": "/src/$1"
     },
     {
-      "src": "/api/(.*)",
-      "dest": "/server.js"
-    },
-    {
-      "src": "^(?!/api).*",
+      "src": "/(.*)",
       "dest": "/index.html"
     }
   ]
