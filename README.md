@@ -31,7 +31,7 @@ HabitForge is a web application designed to assist users in developing positive 
 
 ## Setting Up Locally
 
-1.  Clone this repository using Git: `git clone https://github.com/your-username/habit-forge.git`.
+1.  Clone this repository using Git: `git clone https://github.com/akbariffianto/habit-forge`.
 2.  Open the project in Visual Studio Code.
 3.  Ensure you have Node.js and npm installed on your system.
 4.  Navigate to the project directory in the terminal and run `npm install` to fetch all dependencies.
