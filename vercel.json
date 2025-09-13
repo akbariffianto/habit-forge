@@ -1,21 +1,51 @@
 {
   "version": 2,
-  "routes": [
+  "builds": [
     {
-      "src": "/api/categorize",
-      "dest": "/server.js"
+      "src": "server.js",
+      "use": "@vercel/node"
     },
     {
-      "src": "/src/main.js",
-      "dest": "/src/main.js"
+      "src": "src/**",
+      "use": "@vercel/static"
     },
     {
-      "src": "/src/assets/css/main.css",
-      "dest": "/src/assets/css/main.css"
+      "src": "index.html",
+      "use": "@vercel/static"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/src/(.*\\.js)",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/javascript"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000"
+        }
+      ]
     },
     {
-      "src": "/(.*)",
-      "dest": "/index.html"
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; connect-src 'self' localhost:* http://localhost:*; script-src 'self' 'unsafe-inline' 'unsafe-eval'"
+        }
+      ]
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/server.js"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }
