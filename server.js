@@ -25,7 +25,8 @@ app.use((req, res, next) => {
   next();
 });
 
-// Serve static files
+// Serve static files from src directory
+app.use('/src', express.static(path.join(__dirname, 'src')));
 app.use(express.static(path.join(__dirname)));
 
 // --- HANYA RUTE API ---

@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "node server.js"
+    "dev": "node server.js",
+    "build": "mkdir dist && xcopy /E /I src dist\\src && copy index.html dist"
   },
   "dependencies": {
     "cors": "^2.8.5",
